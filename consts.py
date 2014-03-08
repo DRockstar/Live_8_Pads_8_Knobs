@@ -7,7 +7,7 @@ ENCODER_CC = [33, 34, 35, 36, 37, 38, 39, 40]
 # Transport: Stop, Play, Rewind, Fast Forward, Loop, Record
 TRANSPORT_CC = [116, 117, 114, 115, 113, 118, 60]
 # Minus one pad to account for shift button
-PAD_CC = [99, 100, 101, 102, 98, 61, 59,]
+PAD_CC = [99, 100, 101, 102, 98, 61, 59]
 SHIFT_CC = 58
 '''
 ENCODER_MODES:
