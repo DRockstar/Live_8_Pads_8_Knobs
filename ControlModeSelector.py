@@ -125,6 +125,10 @@ class ControlModeSelector(ModeSelectorComponent):
                     + "1: PREV DEVICE    2: NEXT DEVICE    3: PREV BANK    4: NEXT BANK    "
                     + "5: DEVICE ON/OFF    6: DEVICE LOCK    7: RECORD")
 
+                else:
+                    self._mode_index = 0
+                    self.update()
+
 
     def _set_send_nav(self, send_up, send_down):
         if (send_up is not self.send_button_up):

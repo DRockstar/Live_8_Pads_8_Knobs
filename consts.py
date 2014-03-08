@@ -6,12 +6,15 @@ GLOBAL_CHANNEL = 15
 # NOTE_MODE: 0: CC, 1: NOTE
 NOTE_MODE = 0
 #NOTE_MODE = 1 # uncomment if your pads and buttons are sending notes, not CC
-ENCODER_CC = [33, 34, 35, 36, 37, 38, 39, 40]
+# ENCODERS: 8 MIDI CC numbers or MIDI Note numbers
+ENCODERS = [33, 34, 35, 36, 37, 38, 39, 40]
 # Transport: Stop, Play, Rewind, Fast Forward, Loop, Record
-TRANSPORT_CC = [116, 117, 114, 115, 113, 118, 60]
+TRANSPORTS = [116, 117, 114, 115, 113, 118, 60]
 # Minus one pad to account for shift button
-PAD_CC = [99, 100, 101, 102, 98, 61, 59]
-SHIFT_CC = 58
+# Can add another pad # if another shift button
+PADS = [99, 100, 101, 102, 98, 61, 59]
+# In this case, SHIFT is PAD 8
+SHIFT = 58
 '''
 ENCODER_MODES:
 0: absolute

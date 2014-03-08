@@ -78,10 +78,10 @@ class MiniLab_PLUS(ControlSurface):
                 midi_mapmode = Live.MidiMap.MapMode.relative_smooth_two_compliment
             elif ENCODER_MODE == 9:
                 midi_mapmode = Live.MidiMap.MapMode.relative_two_compliment
-            transport_buttons = tuple([ make_button(TRANSPORT_CC[index]) for index in range(len(TRANSPORT_CC)) ])
-            pads = tuple([ make_button(PAD_CC[index]) for index in range(len(PAD_CC)) ])
-            encoders = tuple([ make_encoder(ENCODER_CC[index], midi_mapmode) for index in range(len(ENCODER_CC)) ])
-            shift_button = make_button(SHIFT_CC)
+            transport_buttons = tuple([ make_button(TRANSPORTS[index]) for index in range(len(TRANSPORTS)) ])
+            pads = tuple([ make_button(PADS[index]) for index in range(len(PADS)) ])
+            encoders = tuple([ make_encoder(ENCODERS[index], midi_mapmode) for index in range(len(ENCODERS)) ])
+            shift_button = make_button(SHIFT)
             self.suppress_session_highlight = True
             session = SessionComponent(NUM_TRACKS, NUM_SCENES)
             self.set_highlighting_session_component(session)
