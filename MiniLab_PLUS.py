@@ -96,7 +96,6 @@ class MiniLab_PLUS(ControlSurface):
             control_modes = ControlModeSelector(self, mixer, session, device, device_nav)
             shift_modes = ShiftSelector(self, transport, mixer, session, device, device_nav, encoders, pads, transport_buttons, transport_view_modes, control_modes)
             shift_modes.set_mode_toggle(shift_button)
-            shift_modes.update()
             self.transport = transport
             self.mixer = mixer
             self.session = session

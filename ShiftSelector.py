@@ -24,7 +24,8 @@ class ShiftSelector(ModeSelectorComponent):
         self._all_buttons = pads + transport_buttons
 
     def disconnect(self):
-        ModeSelectorComponent.disconnect(self)
+        self._toggle_pressed = False
+        self._invert_assignment = False
         self._parent = None
         self._transport = None
         self._mixer = None
@@ -37,6 +38,7 @@ class ShiftSelector(ModeSelectorComponent):
         self._transport_view_modes = None
         self._control_modes = None
         self._all_buttons = None
+        ModeSelectorComponent.disconnect(self)
 
     def set_mode_toggle(self, button):
         ModeSelectorComponent.set_mode_toggle(self, button)
