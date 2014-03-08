@@ -59,11 +59,13 @@ class ShiftSelector(ModeSelectorComponent):
                 self._transport_view_modes.update()
                 self._control_modes.set_mode_buttons(None)
                 self._mixer.master_strip().set_volume_control(None)
+                self._mixer.master_strip().set_pan_control(None)
                 self._control_modes.set_controls(self._encoders, self._pads, self._transport_buttons)
                 
             elif self._mode_index == 1:
                 self._parent.reset_controls()
-                self._mixer.master_strip().set_volume_control(self._encoders[7])
+                self._mixer.master_strip().set_volume_control(self._encoders[0])
+                self._mixer.master_strip().set_pan_control(self._encoders[1])
                 self._control_modes.set_mode_buttons(self._all_buttons)
                 self._parent.show_message("  #### SHIFT PRESSED ####   "
                 + "PAD 1: VOLUMES    PAD 2: PANS    PAD 3: SENDS    PAD 4: DEVICE CONTROL      ")

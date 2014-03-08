@@ -122,6 +122,7 @@ class MiniLab_PLUS(ControlSurface):
         self.mixer.selected_strip().set_solo_button(None)
         self.mixer.selected_strip().set_arm_button(None)
         self.mixer.master_strip().set_volume_control(None)
+        self.mixer.master_strip().set_pan_control(None)
         for index in range(len(self.encoders)):
             strip = self.mixer.channel_strip(index)
             strip.set_volume_control(None)
