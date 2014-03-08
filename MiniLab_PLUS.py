@@ -18,44 +18,14 @@ from ControlModeSelector import ControlModeSelector
 from DeviceNavComponent import DeviceNavComponent
 from TransportViewModeSelector import TransportViewModeSelector # Donovan
 from SpecialMixerComponent import SpecialMixerComponent # Donovan
-
-
-NUM_TRACKS = 8
-NUM_SCENES = 1
-GLOBAL_CHANNEL = 15
-ENCODER_CC = [33, 34, 35, 36, 37, 38, 39, 40]
-# Transport: Stop, Play, Rewind, Fast Forward, Loop, Record
-TRANSPORT_CC = [116, 117, 114, 115, 113, 118, 60]
-# Minus one pad to account for shift button
-PAD_CC = [99, 100, 101, 102, 98, 61, 59] 
-SHIFT_CC = 58
-ENCODER_MODE = Live.MidiMap.MapMode.relative_smooth_binary_offset
-# Donovan changed MIDI notes, channel 16, notice reverse order of the drum rack rows
-PAD_TRANSLATIONS = (
- (0, 3, 36, 15),
- (1, 3, 37, 15),
- (2, 3, 38, 15),
- (3, 3, 39, 15),
- (0, 2, 40, 15),
- (1, 2, 41, 15),
- (2, 2, 42, 15),
- (3, 2, 43, 15),
- (0, 1, 44, 15),
- (1, 1, 45, 15),
- (2, 1, 46, 15),
- (3, 1, 47, 15),
- (0, 0, 48, 15),
- (1, 0, 49, 15),
- (2, 0, 50, 15),
- (3, 0, 51, 15)
- )
+from consts import *
 
 def make_button(cc_no):
     is_momentary = True
     return ButtonElement(is_momentary, MIDI_CC_TYPE, GLOBAL_CHANNEL, cc_no)
 
-def make_encoder(cc_no):
-    return EncoderElement(MIDI_CC_TYPE, GLOBAL_CHANNEL, cc_no, ENCODER_MODE)
+def make_encoder(cc_no, midi_mapmode):
+    return EncoderElement(MIDI_CC_TYPE, GLOBAL_CHANNEL, cc_no, midi_mapmode)
 
 
 class MiniLab_PLUS(ControlSurface):
@@ -67,10 +37,47 @@ class MiniLab_PLUS(ControlSurface):
             self._c_instance = c_instance 
             self._suggested_input_port = 'Arturia_MINILAB'
             self._suggested_output_port = 'Arturia_MINILAB'
+            PAD_TRANSLATIONS = (
+             (0, 3, DRUMPAD_NOTES[0], GLOBAL_CHANNEL),
+             (1, 3, DRUMPAD_NOTES[1], GLOBAL_CHANNEL),
+             (2, 3, DRUMPAD_NOTES[2], GLOBAL_CHANNEL),
+             (3, 3, DRUMPAD_NOTES[3], GLOBAL_CHANNEL),
+             (0, 2, DRUMPAD_NOTES[4], GLOBAL_CHANNEL),
+             (1, 2, DRUMPAD_NOTES[5], GLOBAL_CHANNEL),
+             (2, 2, DRUMPAD_NOTES[6], GLOBAL_CHANNEL),
+             (3, 2, DRUMPAD_NOTES[7], GLOBAL_CHANNEL),
+             (0, 1, DRUMPAD_NOTES[8], GLOBAL_CHANNEL),
+             (1, 1, DRUMPAD_NOTES[9], GLOBAL_CHANNEL),
+             (2, 1, DRUMPAD_NOTES[10], GLOBAL_CHANNEL),
+             (3, 1, DRUMPAD_NOTES[11], GLOBAL_CHANNEL),
+             (0, 0, DRUMPAD_NOTES[12], GLOBAL_CHANNEL),
+             (1, 0, DRUMPAD_NOTES[13], GLOBAL_CHANNEL),
+             (2, 0, DRUMPAD_NOTES[14], GLOBAL_CHANNEL),
+             (3, 0, DRUMPAD_NOTES[15], GLOBAL_CHANNEL)
+             )
             self.set_pad_translations(PAD_TRANSLATIONS)
+            midi_mapmode = Live.MidiMap.MapMode.absolute
+            if ENCODER_MODE == 1:
+                midi_mapmode = Live.MidiMap.MapMode.absolute_14_bit
+            elif ENCODER_MODE == 2:
+                midi_mapmode = Live.MidiMap.MapMode.relative_binary_offset
+            elif ENCODER_MODE == 3:
+                midi_mapmode = Live.MidiMap.MapMode.relative_signed_bit
+            elif ENCODER_MODE == 4:
+                midi_mapmode = Live.MidiMap.MapMode.relative_signed_bit2
+            elif ENCODER_MODE == 5:
+                midi_mapmode = Live.MidiMap.MapMode.relative_smooth_binary_offset
+            elif ENCODER_MODE == 6:
+                midi_mapmode = Live.MidiMap.MapMode.relative_smooth_signed_bit
+            elif ENCODER_MODE == 7:
+                midi_mapmode = Live.MidiMap.MapMode.relative_smooth_signed_bit2
+            elif ENCODER_MODE == 8:
+                midi_mapmode = Live.MidiMap.MapMode.relative_smooth_two_compliment
+            elif ENCODER_MODE == 9:
+                midi_mapmode = Live.MidiMap.MapMode.relative_two_compliment
             transport_buttons = tuple([ make_button(TRANSPORT_CC[index]) for index in range(len(TRANSPORT_CC)) ])
             pads = tuple([ make_button(PAD_CC[index]) for index in range(len(PAD_CC)) ])
-            encoders = tuple([ make_encoder(ENCODER_CC[index]) for index in range(len(ENCODER_CC)) ])
+            encoders = tuple([ make_encoder(ENCODER_CC[index], midi_mapmode) for index in range(len(ENCODER_CC)) ])
             shift_button = make_button(SHIFT_CC)
             stop_button = transport_buttons[0]
             play_button = transport_buttons[1]
@@ -95,6 +102,7 @@ class MiniLab_PLUS(ControlSurface):
             control_modes = ControlModeSelector(self, mixer, session, device, device_nav)
             shift_modes = ShiftSelector(self, transport, mixer, session, device, device_nav, encoders, pads, transport_buttons, transport_view_modes, control_modes)
             shift_modes.set_mode_toggle(shift_button)
+            shift_modes.update()
             self.transport = transport
             self.mixer = mixer
             self.session = session

@@ -59,40 +59,11 @@ class ShiftSelector(ModeSelectorComponent):
                 self._control_modes.set_controls(self._encoders, self._pads, self._transport_buttons)
                 
             elif self._mode_index == 1:
-                '''
-                self._transport.set_stop_button(None)
-                self._transport.set_play_button(None)
-                self._transport.set_seek_buttons(None, None)
-                self._session.set_scene_bank_buttons(None, None)
-                #self._session.set_select_buttons(None, None)
-                self._transport.set_loop_button(None)
-                scene = self._session.scene(0)
-                scene.set_launch_button(None)
-                self._transport.set_record_button(None)
-                self._transport.set_overdub_button(None)
-                self._session.set_track_bank_buttons(None, None)
-                self._mixer.set_select_buttons(None, None)
-                self._mixer.selected_strip().set_mute_button(None)
-                self._mixer.selected_strip().set_solo_button(None)
-                self._mixer.selected_strip().set_arm_button(None)
-                self._device_nav.set_device_nav_buttons(None, None)
-                self._device.set_bank_nav_buttons(None, None)
-                self._device.set_on_off_button(None)
-                self._device.set_lock_button(None)
-                self._device.set_parameter_controls(None)
-                for index in range(len(self._encoders)):
-                    strip = self._mixer.channel_strip(index)
-                    strip.set_volume_control(None)
-                    strip.set_pan_control(None)
-                    strip.set_send_controls((None, None, None, None, None, None, None, None, None, None, None, None))
-
-                self._control_modes._set_send_nav(None, None)
-                self._control_modes.set_controls(None, None, None)
-                '''
                 self._parent.reset_controls()
                 self._mixer.master_strip().set_volume_control(self._encoders[7])
                 self._control_modes.set_mode_buttons(self._all_buttons)
                 self._parent.show_message("  #### SHIFT PRESSED ####   PAD 1: VOLUMES    PAD 2: PANS    PAD 3: SENDS    PAD 4: DEVICE CONTROL      ")
+                
     def _toggle_value(self, value):
         assert self._mode_toggle != None or AssertionError
         assert value in range(128) or AssertionError
