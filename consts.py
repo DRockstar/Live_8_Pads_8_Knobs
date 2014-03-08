@@ -3,6 +3,9 @@
 NUM_TRACKS = 8
 NUM_SCENES = 1
 GLOBAL_CHANNEL = 15
+# NOTE_MODE: 0: CC, 1: NOTE
+NOTE_MODE = 0
+#NOTE_MODE = 1 # uncomment if your pads and buttons are sending notes, not CC
 ENCODER_CC = [33, 34, 35, 36, 37, 38, 39, 40]
 # Transport: Stop, Play, Rewind, Fast Forward, Loop, Record
 TRANSPORT_CC = [116, 117, 114, 115, 113, 118, 60]

@@ -22,7 +22,10 @@ from SpecialMixerComponent import SpecialMixerComponent # Donovan
 
 def make_button(cc_no):
     is_momentary = True
-    return ButtonElement(is_momentary, MIDI_CC_TYPE, GLOBAL_CHANNEL, cc_no)
+    if NOTE_MODE == 0:
+        return ButtonElement(is_momentary, MIDI_CC_TYPE, GLOBAL_CHANNEL, cc_no)
+    else:
+        return ButtonElement(is_momentary, MIDI_NOTE_TYPE, GLOBAL_CHANNEL, cc_no)
 
 def make_encoder(cc_no, midi_mapmode):
     return EncoderElement(MIDI_CC_TYPE, GLOBAL_CHANNEL, cc_no, midi_mapmode)
