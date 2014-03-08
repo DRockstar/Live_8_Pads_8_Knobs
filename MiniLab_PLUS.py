@@ -79,12 +79,6 @@ class MiniLab_PLUS(ControlSurface):
             pads = tuple([ make_button(PAD_CC[index]) for index in range(len(PAD_CC)) ])
             encoders = tuple([ make_encoder(ENCODER_CC[index], midi_mapmode) for index in range(len(ENCODER_CC)) ])
             shift_button = make_button(SHIFT_CC)
-            stop_button = transport_buttons[0]
-            play_button = transport_buttons[1]
-            rwd_button = transport_buttons[2]
-            ffwd_button = transport_buttons[3]
-            loop_button = transport_buttons[4]
-            record_button = transport_buttons[5]
             self.suppress_session_highlight = True
             session = SessionComponent(NUM_TRACKS, NUM_SCENES)
             self.set_highlighting_session_component(session)
@@ -93,7 +87,7 @@ class MiniLab_PLUS(ControlSurface):
             mixer = SpecialMixerComponent(NUM_TRACKS)
             session.set_mixer(mixer)
             transport = TransportComponent()
-            transport_view_modes = TransportViewModeSelector(transport, session, stop_button, play_button, rwd_button, ffwd_button, loop_button, record_button)
+            transport_view_modes = TransportViewModeSelector(transport, session, transport_buttons)
             self._device_selection_follows_track_selection = True
             #device = DeviceComponent()
             device = BestBankDeviceComponent()

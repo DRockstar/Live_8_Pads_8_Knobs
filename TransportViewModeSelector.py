@@ -9,21 +9,18 @@ from _Framework.ClipSlotComponent import ClipSlotComponent
 class TransportViewModeSelector(ModeSelectorComponent):
     """ Class that reassigns specific buttons based on the views visible in Live """
 
-    def __init__(self, transport, session, stop_button, play_button, rwd_button, ffwd_button, loop_button, record_button):
+    def __init__(self, transport, session, transport_buttons):
         assert isinstance(transport, TransportComponent) or AssertionError # Donovan assert instead of raise for Live 9?
         assert isinstance(session, SessionComponent) or AssertionError
-        assert isinstance(ffwd_button, ButtonElement) or AssertionError
-        assert isinstance(rwd_button, ButtonElement) or AssertionError
-        assert isinstance(loop_button, ButtonElement) or AssertionError
         ModeSelectorComponent.__init__(self)
         self._transport = transport
         self._session = session
-        self._stop_button = stop_button
-        self._play_button = play_button
-        self._rwd_button = rwd_button
-        self._ffwd_button = ffwd_button
-        self._loop_button = loop_button
-        self._record_button = record_button
+        self._stop_button = transport_buttons[0]
+        self._play_button = transport_buttons[1]
+        self._rwd_button = transport_buttons[2]
+        self._ffwd_button = transport_buttons[3]
+        self._loop_button = transport_buttons[4]
+        self._record_button = transport_buttons[5]
         self.application().view.add_is_view_visible_listener('Session', self._on_view_changed)
         self.update()
 
