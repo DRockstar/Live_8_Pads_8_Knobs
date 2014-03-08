@@ -1,6 +1,7 @@
 # Code Hackery by Donovan Bartish, aka DRockstar
 from __future__ import with_statement
 import Live
+from consts import *
 from _Framework.ControlSurface import ControlSurface
 from _Framework.InputControlElement import MIDI_CC_TYPE
 from _Framework.ButtonElement import ButtonElement
@@ -12,13 +13,12 @@ from _Framework.ChannelStripComponent import ChannelStripComponent
 from _Framework.ModeSelectorComponent import ModeSelectorComponent
 from _Framework.ClipSlotComponent import ClipSlotComponent
 #from _Framework.DeviceComponent import DeviceComponent
-from Axiom_DirectLink.BestBankDeviceComponent import BestBankDeviceComponent # Donovan
+from BestBankDeviceComponent import BestBankDeviceComponent
 from ShiftSelector import ShiftSelector
 from ControlModeSelector import ControlModeSelector
 from DeviceNavComponent import DeviceNavComponent
 from TransportViewModeSelector import TransportViewModeSelector # Donovan
 from SpecialMixerComponent import SpecialMixerComponent # Donovan
-from consts import *
 
 def make_button(cc_no):
     is_momentary = True
