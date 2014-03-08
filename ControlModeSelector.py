@@ -19,9 +19,13 @@ class ControlModeSelector(ModeSelectorComponent):
         self.send_button_up = None
         self.send_button_down = None
         self.send_controls = []
+        self._modes_buttons = []
+        self._pads_len = None
+        self._transport_len = None
         self._mode_index = 0
 
     def disconnect(self):
+        ModeSelectorComponent.disconnect(self)
         self._parent = None
         self._mixer = None
         self._session = None
@@ -34,11 +38,17 @@ class ControlModeSelector(ModeSelectorComponent):
         self.send_button_up = None
         self.send_button_down = None
         self.send_controls = []
-        ModeSelectorComponent.disconnect(self)
+        self._modes_buttons = []
+        self._pads_len = None
+        self._transport_len = None
 
     def set_mode_toggle(self, button):
         ModeSelectorComponent.set_mode_toggle(self, button)
         self.set_mode(0)
+        
+    def set_lengths(self, pads, transport_buttons):
+        self._pads_len = len(pads)
+        self._transport_len = len(transport_buttons)
 
     def set_mode_buttons(self, buttons):
         assert isinstance(buttons, (tuple, type(None))) or AssertionError
@@ -60,7 +70,7 @@ class ControlModeSelector(ModeSelectorComponent):
         self.update()
 
     def number_of_modes(self):
-        return 14
+        return 16 # Max number of modes?
 
     def update(self):
         if (self.is_enabled() and self._controls != None and self._pads != None 
@@ -74,7 +84,7 @@ class ControlModeSelector(ModeSelectorComponent):
             for index in range(len(self._controls)):
                 strip = self._mixer.channel_strip(index)
 
-                if mode == 0 or mode == 7:
+                if mode == 0 or (mode - self._pads_len) == 0:
                     self._session.set_track_bank_buttons(self._pads[1], self._pads[0])
                     self._mixer.set_select_buttons(self._pads[3], self._pads[2])
                     self._mixer.selected_strip().set_mute_button(self._pads[4])
@@ -85,7 +95,7 @@ class ControlModeSelector(ModeSelectorComponent):
                     + "1: BANK LEFT    2: BANK RIGHT    3: PREV TRACK    4: NEXT TRACK    "
                     + "5: MUTE    6: SOLO    7: RECORD")
 
-                elif mode == 1 or mode == 8:
+                elif mode == 1 or (mode - self._pads_len) == 1:
                     self._session.set_track_bank_buttons(self._pads[1], self._pads[0])
                     self._mixer.set_select_buttons(self._pads[3], self._pads[2])
                     self._mixer.selected_strip().set_mute_button(self._pads[4])
@@ -96,7 +106,7 @@ class ControlModeSelector(ModeSelectorComponent):
                     + "1:  BANK LEFT    2: BANK RIGHT    3: PREV TRACK    4: NEXT TRACK    "
                     + "5: MUTE    6: SOLO    7: RECORD")
 
-                elif mode == 2 or mode == 9:
+                elif mode == 2 or (mode - self._pads_len) == 2:
                     self._session.set_track_bank_buttons(self._pads[1], self._pads[0])
                     self._mixer.selected_strip().set_mute_button(self._pads[4])
                     self._mixer.selected_strip().set_solo_button(self._pads[5])
@@ -104,7 +114,7 @@ class ControlModeSelector(ModeSelectorComponent):
                     self._set_send_nav(self._pads[3], self._pads[2])
                     self._update_send_index(self.sends_index)
 
-                elif mode == 3 or mode == 10:
+                elif mode == 3 or (mode - self._pads_len) == 3:
                     self._device_nav.set_device_nav_buttons(self._pads[0], self._pads[1])
                     self._device.set_bank_nav_buttons(self._pads[2], self._pads[3])
                     self._device.set_on_off_button(self._pads[4])

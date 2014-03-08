@@ -60,6 +60,7 @@ class ShiftSelector(ModeSelectorComponent):
                 self._control_modes.set_mode_buttons(None)
                 self._mixer.master_strip().set_volume_control(None)
                 self._mixer.master_strip().set_pan_control(None)
+                self._control_modes.set_lengths(self._pads, self._transport_buttons)
                 self._control_modes.set_controls(self._encoders, self._pads, self._transport_buttons)
                 
             elif self._mode_index == 1:
