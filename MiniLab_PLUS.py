@@ -94,7 +94,8 @@ class MiniLab_PLUS(ControlSurface):
             self.set_device_component(device)
             device_nav = DeviceNavComponent()
             control_modes = ControlModeSelector(self, mixer, session, device, device_nav)
-            shift_modes = ShiftSelector(self, transport, mixer, session, device, device_nav, encoders, pads, transport_buttons, transport_view_modes, control_modes)
+            shift_modes = ShiftSelector(self, transport, mixer, session, device, device_nav, 
+            encoders, pads, transport_buttons, transport_view_modes, control_modes)
             shift_modes.set_mode_toggle(shift_button)
             self.transport = transport
             self.mixer = mixer
@@ -125,7 +126,8 @@ class MiniLab_PLUS(ControlSurface):
             strip = self.mixer.channel_strip(index)
             strip.set_volume_control(None)
             strip.set_pan_control(None)
-            strip.set_send_controls((None, None, None, None, None, None, None, None, None, None, None, None))
+            strip.set_send_controls(
+            (None, None, None, None, None, None, None, None, None, None, None, None))
         self.device_nav.set_device_nav_buttons(None, None)
         self.device.set_bank_nav_buttons(None, None)
         self.device.set_on_off_button(None)

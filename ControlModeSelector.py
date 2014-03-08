@@ -63,7 +63,8 @@ class ControlModeSelector(ModeSelectorComponent):
         return 14
 
     def update(self):
-        if self.is_enabled() and self._controls != None and self._pads != None and self._mode_index in range(self.number_of_modes()):
+        if (self.is_enabled() and self._controls != None and self._pads != None 
+        and self._mode_index in range(self.number_of_modes())):
             for index in range(len(self._modes_buttons)):
                 if index == self._mode_index:
                     self._modes_buttons[index].turn_on()
@@ -81,7 +82,8 @@ class ControlModeSelector(ModeSelectorComponent):
                     self._mixer.selected_strip().set_arm_button(self._pads[6])
                     strip.set_volume_control(self._controls[index])
                     self._parent.show_message("#### VOLUME MODE ####  PADS:    " 
-                    + "1: BANK LEFT    2: BANK RIGHT    3: PREV TRACK    4: NEXT TRACK    5: MUTE    6: SOLO    7: RECORD")
+                    + "1: BANK LEFT    2: BANK RIGHT    3: PREV TRACK    4: NEXT TRACK    "
+                    + "5: MUTE    6: SOLO    7: RECORD")
 
                 elif mode == 1 or mode == 8:
                     self._session.set_track_bank_buttons(self._pads[1], self._pads[0])
@@ -91,7 +93,8 @@ class ControlModeSelector(ModeSelectorComponent):
                     self._mixer.selected_strip().set_arm_button(self._pads[6])
                     strip.set_pan_control(self._controls[index])
                     self._parent.show_message("#### PAN MODE ####  PADS:    "
-                    + "1:  BANK LEFT    2: BANK RIGHT    3: PREV TRACK    4: NEXT TRACK    5: MUTE    6: SOLO    7: RECORD")
+                    + "1:  BANK LEFT    2: BANK RIGHT    3: PREV TRACK    4: NEXT TRACK    "
+                    + "5: MUTE    6: SOLO    7: RECORD")
 
                 elif mode == 2 or mode == 9:
                     self._session.set_track_bank_buttons(self._pads[1], self._pads[0])
@@ -109,7 +112,8 @@ class ControlModeSelector(ModeSelectorComponent):
                     self._mixer.selected_strip().set_arm_button(self._pads[6])                    
                     self._device.set_parameter_controls(self._controls)
                     self._parent.show_message("#### DEVICE MODE ####  PADS:    "
-                    + "1: PREV DEVICE    2: NEXT DEVICE    3: PREV BANK    4: NEXT BANK    5: DEVICE ON/OFF    6: DEVICE LOCK    7: RECORD")
+                    + "1: PREV DEVICE    2: NEXT DEVICE    3: PREV BANK    4: NEXT BANK    "
+                    + "5: DEVICE ON/OFF    6: DEVICE LOCK    7: RECORD")
 
 
     def _set_send_nav(self, send_up, send_down):
@@ -157,6 +161,7 @@ class ControlModeSelector(ModeSelectorComponent):
                 self.send_controls.append(None)
             self.send_controls[sends_index] = self._controls[index]
             strip.set_send_controls(tuple(self.send_controls))
-        self._parent.show_message("#### SEND " + send_letters[sends_index]
-         + " MODE ####  PADS:    1: BANK LEFT     2: BANK RIGHT    3: SENDS DOWN    4: SENDS UP    5: MUTE    6: SOLO    7: RECORD")
+        self._parent.show_message("#### SEND " + send_letters[sends_index] + " MODE ####  PADS:    "
+         + "1: BANK LEFT     2: BANK RIGHT    3: SENDS DOWN    4: SENDS UP    "
+         + "5: MUTE    6: SOLO    7: RECORD")
 

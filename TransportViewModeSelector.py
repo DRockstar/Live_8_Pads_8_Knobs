@@ -10,7 +10,8 @@ class TransportViewModeSelector(ModeSelectorComponent):
     """ Class that reassigns specific buttons based on the views visible in Live """
 
     def __init__(self, transport, session, transport_buttons):
-        assert isinstance(transport, TransportComponent) or AssertionError # Donovan assert instead of raise for Live 9?
+        # Donovan assert instead of raise for Live 9?
+        assert isinstance(transport, TransportComponent) or AssertionError
         assert isinstance(session, SessionComponent) or AssertionError
         ModeSelectorComponent.__init__(self)
         self._transport = transport
@@ -46,7 +47,8 @@ class TransportViewModeSelector(ModeSelectorComponent):
                 self._transport.set_seek_buttons(self._ffwd_button, self._rwd_button)
                 self._session.set_scene_bank_buttons(None, None)
                 self._transport.set_loop_button(self._loop_button)
-                #self._session.set_select_buttons(None, None) # These select buttons are a pita, selecting None produces errors
+                # These select buttons are a pita, selecting None produces errors
+                #self._session.set_select_buttons(None, None)
                 scene.set_launch_button(None)
             else:
                 self._transport.set_seek_buttons(None, None)

@@ -43,7 +43,8 @@ class DeviceNavComponent(ControlSurfaceComponent):
         if self.is_enabled():
             if not sender.is_momentary() or value != 0:
                 app_view = self.application().view
-                if not app_view.is_view_visible('Detail') or not app_view.is_view_visible('Detail/DeviceChain'):
+                if (not app_view.is_view_visible('Detail') 
+                or not app_view.is_view_visible('Detail/DeviceChain')):
                     app_view.show_view('Detail')
                     app_view.show_view('Detail/DeviceChain')
                 else:

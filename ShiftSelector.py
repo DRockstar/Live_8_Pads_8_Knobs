@@ -6,7 +6,8 @@ from _Framework.ButtonElement import ButtonElement
 class ShiftSelector(ModeSelectorComponent):
     """ Shift Button """
 
-    def __init__(self, parent, transport, mixer, session, device, device_nav, encoders, pads, transport_buttons, transport_view_modes, control_modes):
+    def __init__(self, parent, transport, mixer, session, device, device_nav, encoders, 
+    pads, transport_buttons, transport_view_modes, control_modes):
         ModeSelectorComponent.__init__(self)
         self._toggle_pressed = False
         self._invert_assignment = False
@@ -64,7 +65,8 @@ class ShiftSelector(ModeSelectorComponent):
                 self._parent.reset_controls()
                 self._mixer.master_strip().set_volume_control(self._encoders[7])
                 self._control_modes.set_mode_buttons(self._all_buttons)
-                self._parent.show_message("  #### SHIFT PRESSED ####   PAD 1: VOLUMES    PAD 2: PANS    PAD 3: SENDS    PAD 4: DEVICE CONTROL      ")
+                self._parent.show_message("  #### SHIFT PRESSED ####   "
+                + "PAD 1: VOLUMES    PAD 2: PANS    PAD 3: SENDS    PAD 4: DEVICE CONTROL      ")
                 
     def _toggle_value(self, value):
         assert self._mode_toggle != None or AssertionError
