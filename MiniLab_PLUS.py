@@ -101,6 +101,7 @@ class MiniLab_PLUS(ControlSurface):
             encoders, pads, transport_buttons, transport_view_modes, control_modes)
             shift_modes.set_mode_toggle(shift_button)
             self.transport = transport
+            self.transport_view_modes = transport_view_modes
             self.mixer = mixer
             self.session = session
             self.device = device
@@ -117,6 +118,7 @@ class MiniLab_PLUS(ControlSurface):
         self.transport.set_loop_button(None)
         self.transport.set_record_button(None)
         self.transport.set_overdub_button(None)
+        self.transport_view_modes._set_session_view_button(None)
         scene = self.session.scene(0)
         scene.set_launch_button(None)
         self.session.set_track_bank_buttons(None, None)
@@ -145,6 +147,7 @@ class MiniLab_PLUS(ControlSurface):
 
     def disconnect(self):
         self.transport = None
+        self.transport_view_modes = None
         self.mixer = None
         self.session = None
         self.device = None

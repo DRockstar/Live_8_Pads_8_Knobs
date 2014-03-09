@@ -2,6 +2,7 @@
 import Live
 from _Framework.ModeSelectorComponent import ModeSelectorComponent
 from _Framework.ButtonElement import ButtonElement
+from consts import MODE_BUTTONS_IN_REVERSE
 
 class ShiftSelector(ModeSelectorComponent):
     """ Shift Button """
@@ -68,9 +69,15 @@ class ShiftSelector(ModeSelectorComponent):
                 self._mixer.master_strip().set_volume_control(self._encoders[0])
                 self._mixer.master_strip().set_pan_control(self._encoders[1])
                 self._control_modes.set_mode_buttons(self._all_buttons)
-                self._parent.show_message("  #### SHIFT PRESSED ####   "
-                + "PAD 1: VOLUMES    PAD 2: PANS    PAD 3: SENDS    PAD 4: DEVICE CONTROL      ")
-                
+                if MODE_BUTTONS_IN_REVERSE == 1:
+                    self._control_modes.set_mode_buttons(reversed(self._all_buttons))
+                    self._parent.show_message("  #### SHIFT PRESSED ####   "
+                    + "PAD 7: VOLUMES    PAD 6: PANS    PAD 5: SENDS    PAD 4: DEVICE CONTROL      ")
+                else:
+                    self._control_modes.set_mode_buttons(self._all_buttons)
+                    self._parent.show_message("  #### SHIFT PRESSED ####   "
+                    + "PAD 1: VOLUMES    PAD 2: PANS    PAD 3: SENDS    PAD 4: DEVICE CONTROL      ")
+
     def _toggle_value(self, value):
         assert self._mode_toggle != None or AssertionError
         assert value in range(128) or AssertionError

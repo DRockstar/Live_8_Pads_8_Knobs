@@ -22,6 +22,9 @@ class TransportViewModeSelector(ModeSelectorComponent):
         self._ffwd_button = transport_buttons[3]
         self._loop_button = transport_buttons[4]
         self._record_button = transport_buttons[5]
+        self._view_button = transport_buttons[6]
+        self.session_view_button = None
+        self.view = Live.Application.get_application().view
         self.application().view.add_is_view_visible_listener('Session', self._on_view_changed)
         self.update()
 
@@ -35,6 +38,8 @@ class TransportViewModeSelector(ModeSelectorComponent):
         self._rwd_button = None
         self._loop_button = None
         self._record_button = None
+        self._view_button = None
+        self.session_view_button = None
         self.application().view.remove_is_view_visible_listener('Session', self._on_view_changed)
 
     def update(self):
@@ -43,6 +48,7 @@ class TransportViewModeSelector(ModeSelectorComponent):
             self._transport.set_stop_button(self._stop_button)
             self._transport.set_play_button(self._play_button)
             self._transport.set_record_button(self._record_button)
+            self._set_session_view_button(self._view_button)
             if self._mode_index == 0:
                 self._transport.set_seek_buttons(self._ffwd_button, self._rwd_button)
                 self._session.set_scene_bank_buttons(None, None)
@@ -63,4 +69,23 @@ class TransportViewModeSelector(ModeSelectorComponent):
         else:
             self._mode_index = 0
         self.update()
+
+    def _set_session_view_button(self, button):
+        if (button is not self.session_view_button):
+            if (self.session_view_button != None):
+                self.session_view_button.remove_value_listener(self._session_view_value)
+            self.session_view_button = button
+            if (self.session_view_button != None):
+                self.session_view_button.add_value_listener(self._session_view_value)
+        
+    def _session_view_value(self, value):
+        assert isinstance(value, int)
+        assert isinstance(self.session_view_button, ButtonElement)
+        if value is 127 or not self._view_button.is_momentary():
+            if not self.view.is_view_visible('Session'):
+                self.view.show_view('Session')
+            else:
+                self.view.show_view('Arranger')
+
+
 

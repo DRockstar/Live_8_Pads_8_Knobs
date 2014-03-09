@@ -16,6 +16,15 @@ PADS = [99, 100, 101, 102, 98, 61, 59]
 # In this case, SHIFT is PAD 8
 SHIFT = 58
 '''
+When pads are all in one row, reversing the mode buttons
+helps so you can change modes one handed when using the
+shift button.
+MODE_BUTTONS_IN REVERSE:
+0 = PAD MODES FROM TOP LEFT MOST PAD TO BOTTOM RIGHT
+1 = PAD MODES FROM BOTTOM RIGHT TO TOP LEFT
+'''
+MODE_BUTTONS_IN_REVERSE = 1
+'''
 ENCODER_MODES:
 0: absolute
 1: absolute_14_bit
