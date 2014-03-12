@@ -4,9 +4,10 @@ from _Framework.SceneComponent import SceneComponent
 from _Framework.ClipSlotComponent import ClipSlotComponent
 from _Framework.ButtonElement import ButtonElement
 
-INITIAL_SCROLLING_DELAY = 1 #5
+INITIAL_SCROLLING_DELAY = 5 #5
 INTERVAL_SCROLLING_DELAY = 1 #1
 SCENE_FOLLOWS_SESSION_BOX = True
+TRACK_FOLLOWS_SESSION_BOX = True
 
 class SpecialSessionComponent(SessionComponent):
     
@@ -98,12 +99,24 @@ class SpecialSessionComponent(SessionComponent):
 
     def prepare_bank_right(self):
         self.set_offsets(self.track_offset() + self._track_banking_increment, self.scene_offset())
+        if TRACK_FOLLOWS_SESSION_BOX:
+            selected_track = self.song().view.selected_track
+            all_tracks = self.song().visible_tracks + self.song().return_tracks
+            if selected_track != all_tracks[-1]:
+                index = list(all_tracks).index(selected_track)
+                self.song().view.selected_track = all_tracks[index + 1]
 
     def _bank_right(self):
         return self.prepare_bank_right()
 
     def prepare_bank_left(self):
         self.set_offsets(max(self.track_offset() - self._track_banking_increment, 0), self.scene_offset())
+        if TRACK_FOLLOWS_SESSION_BOX:
+            selected_track = self.song().view.selected_track
+            all_tracks = self.song().visible_tracks + self.song().return_tracks
+            if selected_track != all_tracks[0]:
+                index = list(all_tracks).index(selected_track)
+                self.song().view.selected_track = all_tracks[index - 1]
 
     def _bank_left(self):
         return self.prepare_bank_left()

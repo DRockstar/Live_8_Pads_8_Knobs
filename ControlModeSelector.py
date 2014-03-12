@@ -22,6 +22,8 @@ class ControlModeSelector(ModeSelectorComponent):
         self._modes_buttons = []
         self._pads_len = None
         self._transport_len = None
+        self._clip_launch_button = None
+        self._clip_stop_button = None
         self._mode_index = 0
 
     def disconnect(self):
@@ -41,6 +43,8 @@ class ControlModeSelector(ModeSelectorComponent):
         self._modes_buttons = []
         self._pads_len = None
         self._transport_len = None
+        self._clip_launch_button = None
+        self._clip_stop_button = None
 
     def set_mode_toggle(self, button):
         ModeSelectorComponent.set_mode_toggle(self, button)
@@ -70,7 +74,8 @@ class ControlModeSelector(ModeSelectorComponent):
         self.update()
 
     def number_of_modes(self):
-        return 16 # Max number of modes?
+        # Max number of modes? 16 pads + 8 transport buttons, should be enough!?!
+        return 24
 
     def update(self):
         if (self.is_enabled() and self._controls != None and self._pads != None 
@@ -124,6 +129,19 @@ class ControlModeSelector(ModeSelectorComponent):
                     self._parent.show_message("#### DEVICE MODE ####  PADS:    "
                     + "1: PREV DEVICE    2: NEXT DEVICE    3: PREV BANK    4: NEXT BANK    "
                     + "5: DEVICE ON/OFF    6: DEVICE LOCK    7: RECORD")
+
+                elif mode == 4 or (mode - self._pads_len) == 4:
+                    self.application().view.show_view('Session')
+                    scene = self._session.scene(0)
+                    self._session.set_track_bank_buttons(self._pads[1], self._pads[0])
+                    self._session.set_scene_bank_buttons(self._pads[3], self._pads[2])
+                    scene.set_launch_button(self._pads[4])
+                    self._set_clip_launch_button(self._pads[5])
+                    self._set_clip_stop_button(self._pads[6])
+                    strip.set_volume_control(self._controls[index])
+                    self._parent.show_message("#### CLIPS MODE ####  PADS:    "
+                    + "1: CLIP LEFT    2: CLIP RIGHT    3: CLIP UP    4: CLIP DOWN    "
+                    + "5: LAUNCH SCENE    6: LAUNCH CLIP    7: STOP CLIP")                
 
                 else:
                     self._mode_index = 0
@@ -179,3 +197,24 @@ class ControlModeSelector(ModeSelectorComponent):
          + "1: BANK LEFT     2: BANK RIGHT    3: SENDS DOWN    4: SENDS UP    "
          + "5: MUTE    6: SOLO    7: RECORD")
 
+    def _set_clip_launch_button(self, button):
+        if (button is not self._clip_launch_button):
+            if (self._clip_launch_button != None):
+                self._clip_launch_button.remove_value_listener(self._fire_clip_slot)
+            self._clip_launch_button = button
+            if (self._clip_launch_button != None):
+                self._clip_launch_button.add_value_listener(self._fire_clip_slot)
+
+    def _fire_clip_slot(self, value):
+        self.song().view.highlighted_clip_slot.fire()
+        
+    def _set_clip_stop_button(self, button):
+        if (button is not self._clip_stop_button):
+            if (self._clip_stop_button != None):
+                self._clip_stop_button.remove_value_listener(self._stop_clip_slot)
+            self._clip_stop_button = button
+            if (self._clip_stop_button != None):
+                self._clip_stop_button.add_value_listener(self._stop_clip_slot)
+
+    def _stop_clip_slot(self, value):
+        self.song().view.highlighted_clip_slot.stop()

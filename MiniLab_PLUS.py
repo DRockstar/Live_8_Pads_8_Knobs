@@ -138,6 +138,8 @@ class MiniLab_PLUS(ControlSurface):
         self.device.set_lock_button(None)
         self.device.set_parameter_controls(None)
         self.control_modes._set_send_nav(None, None)
+        self.control_modes._set_clip_launch_button(None)
+        self.control_modes._set_clip_stop_button(None)
         self.control_modes.set_controls(None, None, None)
     
     def show_message(self, message):
