@@ -73,7 +73,7 @@ class ShiftSelector(ModeSelectorComponent):
                 if MODE_BUTTONS_IN_REVERSE == 1:
                     self._control_modes.set_mode_buttons(reversed(self._all_buttons))
                     self._parent.show_message("  #### SHIFT PRESSED ####   "
-                    + "PAD 5: CLIPS    PAD 4: DEVICE CONTROL    PAD 5: SENDS    PAD 6: PANS    PAD 7: VOLUMES    ")
+                    + "PAD 3: CLIPS    PAD 4: DEVICE CONTROL    PAD 5: SENDS    PAD 6: PANS    PAD 7: VOLUMES    ")
                 else:
                     self._control_modes.set_mode_buttons(self._all_buttons)
                     self._parent.show_message("  #### SHIFT PRESSED ####   "
