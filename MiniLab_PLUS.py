@@ -3,16 +3,15 @@ from __future__ import with_statement
 import Live
 from consts import *
 from _Framework.ControlSurface import ControlSurface
-from _Framework.InputControlElement import MIDI_CC_TYPE
+from _Framework.InputControlElement import *
 from _Framework.ButtonElement import ButtonElement
 from _Framework.EncoderElement import EncoderElement
 from _Framework.TransportComponent import TransportComponent
-from _Framework.SessionComponent import SessionComponent
 from _Framework.MixerComponent import MixerComponent
 from _Framework.ChannelStripComponent import ChannelStripComponent
 from _Framework.ModeSelectorComponent import ModeSelectorComponent
 from _Framework.ClipSlotComponent import ClipSlotComponent
-#from _Framework.DeviceComponent import DeviceComponent
+from SpecialSessionComponent import SpecialSessionComponent
 from BestBankDeviceComponent import BestBankDeviceComponent
 from ShiftSelector import ShiftSelector
 from ControlModeSelector import ControlModeSelector
@@ -83,7 +82,7 @@ class MiniLab_PLUS(ControlSurface):
             encoders = tuple([ make_encoder(ENCODERS[index], midi_mapmode) for index in range(len(ENCODERS)) ])
             shift_button = make_button(SHIFT)
             self.suppress_session_highlight = True
-            session = SessionComponent(NUM_TRACKS, NUM_SCENES)
+            session = SpecialSessionComponent(NUM_TRACKS, NUM_SCENES)
             self.set_highlighting_session_component(session)
             self.suppress_session_highlight = False
             session.set_track_banking_increment(1)
@@ -92,7 +91,6 @@ class MiniLab_PLUS(ControlSurface):
             transport = TransportComponent()
             transport_view_modes = TransportViewModeSelector(transport, session, transport_buttons)
             self._device_selection_follows_track_selection = True
-            #device = DeviceComponent()
             device = BestBankDeviceComponent()
             self.set_device_component(device)
             device_nav = DeviceNavComponent()
