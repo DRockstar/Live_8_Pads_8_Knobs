@@ -45,7 +45,7 @@ class TransportViewModeSelector(ModeSelectorComponent):
     def update(self):
         if self.is_enabled():
             scene = self._session.scene(0)
-            self._transport.set_stop_button(self._stop_button)
+            #self._transport.set_stop_button(self._stop_button)
             self._transport.set_play_button(self._play_button)
             self._transport.set_record_button(self._record_button)
             self._set_session_view_button(self._view_button)

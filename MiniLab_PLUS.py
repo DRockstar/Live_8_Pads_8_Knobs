@@ -17,6 +17,7 @@ from ShiftSelector import ShiftSelector
 from ControlModeSelector import ControlModeSelector
 from DeviceNavComponent import DeviceNavComponent
 from TransportViewModeSelector import TransportViewModeSelector # Donovan
+from TransportShiftSelector import TransportShiftSelector
 from SpecialMixerComponent import SpecialMixerComponent # Donovan
 
 def make_button(cc_no):
@@ -98,6 +99,9 @@ class MiniLab_PLUS(ControlSurface):
             shift_modes = ShiftSelector(self, transport, mixer, session, device, device_nav, 
             encoders, pads, transport_buttons, transport_view_modes, control_modes)
             shift_modes.set_mode_toggle(shift_button)
+            transport_shift_modes = TransportShiftSelector(self, transport, transport_buttons, 
+            transport_view_modes, shift_modes, shift_button)
+            transport_shift_modes.set_mode_toggle(transport_buttons[0])
             self.transport = transport
             self.transport_view_modes = transport_view_modes
             self.mixer = mixer
@@ -105,6 +109,7 @@ class MiniLab_PLUS(ControlSurface):
             self.device = device
             self.device_nav = device_nav
             self.control_modes = control_modes
+            self.shift_modes = shift_modes
             self.encoders = encoders
             
     def reset_controls(self):
@@ -153,6 +158,7 @@ class MiniLab_PLUS(ControlSurface):
         self.device = None
         self.device_nav = None
         self.control_modes = None
+        self.shift_modes = None
         self.encoders = []
         ControlSurface.disconnect(self)
         
